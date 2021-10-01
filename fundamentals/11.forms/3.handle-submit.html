@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+        const {useState} = React;
+
+        function MyName() {
+            const [name, setName] = useState('');
+            const [status, setStatus] = useState(false);
+
+            const handleSubmit = event => {
+                event.preventDefault();
+                setStatus(true);
+            }
+
+            return (
+                <div>
+                    {status && <p>{name} - {name.length}</p> }
+                    <form>
+                        <label>Name</label> <br />
+                        <input type="text" value={name} onChange={event => setName(event.target.value)}/>
+                    </form>
+                    <button type="submit" onClick={handleSubmit}>Submit</button>
+                </div>
+            );
+        }
+        ReactDOM.render(<MyName />, rootHandle);
+    </script>
+</body>
+</html>

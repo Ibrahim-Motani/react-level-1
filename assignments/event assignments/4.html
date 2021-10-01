@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Sample Title 
+        </title>
+    </head>
+    <body>
+        <div id="root">
+
+        </div>
+
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <script crossorigin src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+
+        <script type="text/babel">
+           const rootHandle = document.getElementById('root');
+           const fruits = ['apple', 'water melon', 'strawberry', 'kiwi'];
+
+           function RandomElement(props) {
+               const pickFruit = () => alert(props.fruits[Math.floor(Math.random() * props.fruits.length)]);
+               
+               return <button onClick={pickFruit}>Pick Random</button>
+           };
+
+           ReactDOM.render(<RandomElement fruits={fruits} />, rootHandle);
+        </script>
+    </body>
+</html>

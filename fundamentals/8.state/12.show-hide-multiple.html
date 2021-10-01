@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+        const {useState} = React;
+        const data = "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quibusdam, officia. Deleniti magni itaque sapiente cupiditate quo. Aliquam fugit dolorem, reprehenderit quaerat iure, quas ipsa modi, sequi nisi eveniet ipsum aut!";
+        const titles = ['React', 'JS', 'Angular']
+        
+        function App() {
+            return (
+                <div>
+                    <h1>Show / Hide Many</h1>
+                    {titles.map((title, index) => <Article title={title} key={index} data={data} />)}
+                </div>
+            );
+        };
+
+        function Article({title, data}) {
+            const [status, SetStatus] = useState(true);
+
+            return (
+                <div>
+                    <h2>{title}</h2>
+                    {status && <p>{data}</p>}
+                    <button onClick={() => SetStatus(!status)}>{status ? `Hide ${title} article` : `Show ${title} article`}</button>
+                </div>
+            );
+        };
+        
+        ReactDOM.render(<App />, rootHandle);
+    </script>
+</body>
+</html>

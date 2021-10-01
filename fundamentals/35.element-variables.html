@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+
+      function AuthButtons({isLoggedIn}) {
+          let button;
+          if(isLoggedIn) {
+              button = <button>Logout</button>
+          }
+          else {
+              button = <button>Login</button>
+          }
+          return(
+            <div>
+                {button}
+            </div>
+          );
+      };
+
+      function App() {
+        const isLoggedIn = false;
+
+        return (
+            <div>
+                <h2>Welcome User</h2>
+                <AuthButtons isLoggedIn={isLoggedIn}/>
+            </div>
+        );
+    };
+
+      ReactDOM.render(<App />, rootHandle);
+    </script>
+  </body>
+</html>

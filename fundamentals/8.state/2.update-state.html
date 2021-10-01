@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.js"></script>
+
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+      const { useState } = React;
+
+      function FriendsList(props) {
+        const [names, setNames] = useState(["joey", "ross", "chandler"]);
+
+        const removeItem = ele => {
+          const newNames = names.filter(item => item != ele);
+          setNames(newNames);
+        };
+
+        return (
+          <div>
+            <h1>Listing Friends - {names.length}</h1>
+            <ul>
+              {names.map((ele, i) => {
+                return (
+                  <li key={i}>
+                    {ele}
+                    <button
+                      onClick={() => {
+                        removeItem(ele);
+                      }}
+                    >
+                      Remove
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        );
+      }
+
+      ReactDOM.render(<FriendsList />, rootHandle);
+    </script>
+  </body>
+</html>

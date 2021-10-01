@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample Title</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/babel-standalone@6.26.0/babel.js"
+    ></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+      const { useState, useEffect } = React;
+      const url = `https://jsonplaceholder.typicode.com/users/`;
+
+      function SampleComponent() {
+          const [name, setName] = useState('');
+          const [email, setEmail] = useState('');
+          const [city, setCity] = useState('');
+          const [selection, setSelection] = useState(Math.floor(Math.random() * (10- 1) + 2));
+
+          useEffect(() => {
+              axios.get(url + selection)
+                .then(response => {
+                    const result = response.data;
+                    setName(result.name); 
+                    setEmail(result.email); 
+                    setCity(result.address.city);
+                });   
+          }, []);
+
+        return <h1>{name} - {email} - {city}</h1>;
+      }
+      ReactDOM.render(<SampleComponent />, rootHandle);
+    </script>
+  </body>
+</html>

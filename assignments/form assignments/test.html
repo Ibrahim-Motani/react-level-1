@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample Title</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/babel-standalone@6.26.0/babel.js"
+    ></script>
+
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+      const { useState, useEffect } = React;
+
+      if (localStorage.getItem('users') == undefined)
+        localStorage.setItem('users', JSON.stringify([]));
+
+      function App() {
+        // input entered in textaea
+        const [input, setInput] = useState("");
+        // generating array from the input entered in text area
+        const [names, setNames] = useState(JSON.parse(localStorage.getItem('users')));
+        // variable for conditional rendering
+        const [condtion, setCondtion] = useState(false);
+        // variable for displaying selected user from array on the page
+        const [selectedUser, setSelectedUser] = useState("");
+
+        // used for updating of the local storage right away whenever state is updated
+        useEffect(() => {
+          localStorage.setItem('users', JSON.stringify(names));
+          console.log(localStorage);
+        }, [names]);
+
+        // handling submit button
+        const handleSubmit = event => {
+          event.preventDefault();
+          if (input.trim().length === 0) {
+            alert("Input can't be blank");
+            return;
+          }
+          if (JSON.parse(localStorage.getItem("users")).length === 0) {
+            setNames(input.split(",")); 
+            setCondtion(false);
+            setInput("");
+          } else {
+            setNames([
+              ...JSON.parse(localStorage.getItem("users")),
+              ...input.split(","),
+            ]);
+            setInput("");
+          }
+        };
+
+        // handling select button
+        const selectUser = () => {
+          // checking for empty length of list
+          if (names.length === 0)
+            alert("Please add users first in text area to select a user");
+
+          // function for getting random index for selecting random user
+          const getRandomInt = max => Math.floor(Math.random() * max);
+
+          // selectting a random person based on random index
+          const selectedPerson = names[getRandomInt(names.length)];
+
+          //making new list and removing selected user from that list
+          const newNames = names.filter(name => name != selectedPerson);
+
+          // resetting names state variable from the above newNames variable
+          setNames(newNames);
+
+          // resetting state of selected user and setting it to state variable
+          // setting
+          setCondtion(true);
+          setSelectedUser(selectedPerson);
+        };
+
+        return (
+          <div>
+            <form onSubmit={handleSubmit}>
+              <h1>Enter names comma seperated</h1> <br />
+              <textarea
+                value={input}
+                onChange={event => setInput(event.target.value)}
+              ></textarea>{" "}
+              <br />
+              <button type="submit">Submit</button>
+            </form>{" "}
+            <br />
+            {names.length == 0 ? (
+              <h1>Please add users list in textbox</h1>
+            ) : (
+              <h1>Listing users - {names.length}</h1>
+            )}
+            {condtion && <h1>Selected User - {selectedUser}</h1>}
+            <ul>
+              {names.map((name, index) => (
+                <li key={index}>{name}</li>
+              ))}
+            </ul>
+            <button type="button" onClick={selectUser}>
+              Select
+            </button>
+          </div>
+        );
+      }
+      ReactDOM.render(<App />, rootHandle);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+
+        // function alertMe() {
+        //     alert('Hello User');
+        // }
+
+        function GreetUser(props) {
+            function alertMsg() {
+                alert('Hello there ' + props.name);
+            }
+            return (
+                <button onClick={alertMsg}>Greet User</button>
+            );
+        };
+
+        const ele = <GreetUser name="Steve"/>;
+        ReactDOM.render(ele, rootHandle);
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Hello World by React</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+        // JSX
+        const msg = 'Hello World kem cho bhai?';
+        const ele = <h1> {msg} </h1>;
+        console.log(ele);
+        ReactDOM.render(ele, rootHandle);
+    </script>
+</body>
+</html>

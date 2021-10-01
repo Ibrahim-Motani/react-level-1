@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample Title</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/babel-standalone@6.26.0/babel.js"
+    ></script>
+
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+      const { useState } = React;
+      const arr = [
+          { id: 1, title: "get the website live", completed: false },
+          { id: 2, title: "work on user validation", completed: false },
+          { id: 3, title: "automate deployment process", completed: false },
+        ];
+
+      function ProgressBar({ data }) {
+        const totalTasks = data.length;
+        const completedTasks = data.filter(task => task.completed).length;
+
+        return (
+          <div>
+            <h1>Listing Tasks - {data.length}</h1>
+            <progress
+            value={Math.floor((completedTasks * 100) / totalTasks)}
+            max="100"
+            ></progress>
+          </div>
+        );
+      }
+
+      function TasksList({ data, completedHandler }) {
+        const [status, setStatus] = useState(false);
+
+        return (
+          <ul>
+            {data.map(task => {
+              if (task.completed) {
+                return (
+                  <li key={task.id} style={{ textDecoration: "line-through" }}> <input type="checkbox" onChange={() => completedHandler(task.id)} /> {task.title} </li>
+                );
+              } 
+              else {
+                return (
+                  <li key={task.id}> <input type="checkbox" onChange={() => completedHandler(task.id)} /> {task.title} </li>
+                );
+              }
+            })}
+          </ul>
+        );
+      }
+
+      function App() {
+        const [data, setData] = useState(arr);
+
+        const completedHandler = id => {
+          let newData = [];
+
+          for (let task of data) {
+            if (task.id == id)
+              newData.push({ ...task, completed: !task.completed });
+            else newData.push({ ...task });
+          }
+          
+          setData(newData);
+        };
+
+        return (
+          <div>
+            <ProgressBar data={data} />
+            <TasksList data={data} completedHandler={completedHandler} />
+          </div>
+        );
+      }
+
+      ReactDOM.render(<App />, rootHandle);
+    </script>
+  </body>
+</html>

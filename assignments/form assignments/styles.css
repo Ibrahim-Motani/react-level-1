@@ -1,0 +1,119 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;1,100&family=Ubuntu&display=swap');
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #191919;
+  font-family: 'Montserrat';
+}
+
+main {
+    margin-top: 70px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.form-container, .list-container {
+    width: 550px;
+    max-width: 900px;
+    background-color: whitesmoke;
+    border-radius: 17px;
+}
+
+.list-container {
+    margin-top: 20px;
+    padding: 20px;
+}
+
+form {
+    padding: 15px;
+}
+
+input {
+    width: 80%;
+    height: 25px;
+    margin-top: 8px;
+    margin-bottom: 11px;
+    margin: 20px 10%;
+    font-size: 18px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 5px;
+}
+
+
+button {
+    margin-left: 20px;
+    background-color: purple;
+    width: 100px;
+    color: white;
+    height: 30px;
+    font-size: 15px;
+    padding: 5px;
+    letter-spacing: 1.9px;
+}
+
+.form-button {
+    margin: 10px 38%;
+}
+
+.form-button:hover {
+    cursor: pointer;
+}
+
+.selected-user-text {
+    margin-top: 10px;
+    text-decoration: underline dotted;
+    margin-bottom: 20px;
+}
+
+li {
+    list-style: none;
+    font-size: 18px;
+    margin-bottom: 8px;
+    padding-left: 8px;
+    border: 0.5px solid #bbb;
+    display: flex;
+    align-items: center;
+    letter-spacing: 2px;
+}
+
+h1 {
+    letter-spacing: 0.4px;
+}
+
+h2 {
+    margin-bottom: 17px;
+    letter-spacing: 1.2px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.select-button {
+    margin-left: 0;
+}
+
+.select-button:hover {
+    cursor: pointer;
+}
+
+.clear-button:hover {
+    cursor: pointer;
+}
+
+.clear-button:disabled {
+    background-color: #eee;
+    color: black;
+    cursor: not-allowed;
+}

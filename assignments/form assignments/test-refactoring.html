@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style></style>
+    <link rel="stylesheet" href="styles.css" />
+    <title>Sample Title</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/babel-standalone@6.26.0/babel.js"
+    ></script>
+
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+      const { useState, useEffect } = React;
+
+      if (localStorage.getItem("users") == undefined)
+        localStorage.setItem("users", JSON.stringify([]));
+
+      function UsersList({ users, modifyUsers }) {
+        const [condition, setCondition] = useState(false);
+        const [selectedUser, setSelectedUser] = useState("");
+
+        const selectUserHandler = () => {
+          if (users.length === 0) {
+            alert("Please add users first in text area to select a user");
+            return;
+          }
+          const getRandomInt = max => Math.floor(Math.random() * max);
+          const selectedPerson = users[getRandomInt(users.length)];
+          const newUsers = users.filter(user => user != selectedPerson);
+          setCondition(true);
+          setSelectedUser(selectedPerson);
+          modifyUsers(newUsers);
+        };
+
+        const clearAllHandler = () => {
+          modifyUsers([]);
+          setCondition(false);
+        }
+
+        return (
+          <div className="list-container">
+            { users.length === 0 ? <h2>Please add users in the textbox</h2> : <h2>Listing users - {users.length}</h2> }
+            {condition && <h2 className="selected-user-text">Selected user - {selectedUser}</h2>}
+            <ul>
+              {users.map((user, index) => <li key={index}>{user}</li>)}
+            </ul>
+            <div className="button-container">
+                <button type="button" className="select-button" onClick={selectUserHandler}>Select</button>
+              <button type="button" className="clear-button" disabled={!users.length} onClick={clearAllHandler}>Clear All</button>
+            </div>
+          </div>
+        );
+      }
+
+      function Form({ modifyUsers }) {
+        const [input, setInput] = useState("");
+
+        const handleSubmit = event => {
+          event.preventDefault();
+          const all = 'abcdefghijklomnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+          let newUsers = [];
+
+          if (input.trim().length === 0) {
+            alert("Input can't be blank");
+            return;
+          }
+
+          if(input.trim().length === 1 && !all.includes(input)) {
+            alert("Invalid Input");
+            return;
+          }
+
+          if(Number(input) || Number(input) === 0) {
+            alert('Invalid Input');
+            return;
+          }
+
+          if(input.slice(-1) === ',') {
+            alert('Please remove trailing comma after input or add another name after the comma');
+            return;
+          }
+
+          JSON.parse(localStorage.getItem("users")).length === 0
+            ? (newUsers = input
+                .split(",")
+                .map(user => `${user.trim()[0].toUpperCase()}${user.trim().slice(1)}`))
+            : (newUsers = [
+                ...JSON.parse(localStorage.getItem("users")),
+                ...input
+                  .split(",")
+                  .map(user => `${user.trim()[0].toUpperCase()}${user.trim().slice(1)}`),
+              ]);
+
+          setInput("");
+          modifyUsers(newUsers);
+        };
+
+        return (
+          <form onSubmit={handleSubmit} className="form-container">
+            <h1>Enter names comma seperated</h1> <br />
+            <input
+              type="text"
+              className="input-box"
+              value={input}
+              onChange={event => setInput(event.target.value)}
+            ></input> <br />
+            <button className="form-button" type="submit">Submit</button> <br />
+          </form>
+        );
+      }
+
+      function App() {
+        const [users, setUsers] = useState(
+          JSON.parse(localStorage.getItem("users"))
+        );
+
+        useEffect(() => localStorage.setItem("users", JSON.stringify(users)), [users]);
+
+        const modifyUsers = newUsers => setUsers(newUsers);
+
+        return (
+          <main>
+            <Form modifyUsers={modifyUsers} />
+            <UsersList users={users} modifyUsers={modifyUsers} />
+          </main>
+        );
+      }
+
+      ReactDOM.render(<App />, rootHandle);
+    </script>
+  </body>
+</html>

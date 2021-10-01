@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+        const data = {
+            usa: 30,
+            india: 60,
+            australia: 10,
+        };
+
+        const generateList = data => {
+            const result = [];
+            for(const k in data) {
+                result.push(<li key={k}>{k} - {data[k]}</li>)
+            }
+            return result;
+        }
+
+        const ele = (
+            <ul>
+                {generateList(data)}
+            </ul>
+        );
+
+        ReactDOM.render(ele, rootHandle);
+    </script>
+</body>
+</html>

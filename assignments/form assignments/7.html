@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample Title</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/babel-standalone@6.26.0/babel.js"
+    ></script>
+
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+      const { useState } = React;
+      const arr = [
+        { id: 1, title: "get the website live", completed: true },
+        { id: 2, title: "work on user validation", completed: false },
+        { id: 3, title: "automate deployment process", completed: false },
+      ];
+
+      function TasksList({ id, title }) {
+        const [status, setStatus] = useState(false);
+
+        return (
+          <li key={id} style={status ? { textDecoration: "line-through" } : {}}>
+            <input type="checkbox" onChange={() => setStatus(!status)} />
+            {title}
+          </li>
+        );
+      }
+
+      function App({ data }) {
+        return (
+          <div>
+            <h1>Listing Tasks - {data.length}</h1>
+            <ul>
+              {data.map(task => (
+                <TasksList key={task.id} id={task.id} title={task.title} />
+              ))}
+            </ul>
+          </div>
+        );
+      }
+
+      ReactDOM.render(<App data={arr} />, rootHandle);
+    </script>
+  </body>
+</html>

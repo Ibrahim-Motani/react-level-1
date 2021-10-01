@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample Title</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/babel-standalone@6.26.0/babel.js"
+    ></script>
+
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+      const { useState } = React;
+      const arr = [
+          { id: 1, name: "emp11", email: "emp11@gmail.com", selected: false },
+
+          { id: 2, name: "emp12", email: "emp12@gmail.com", selected: false },
+
+          { id: 3, name: "emp13", email: "emp13@gmail.com", selected: false },
+
+          { id: 4, name: "emp14", email: "emp14@gmail.com", selected: false },
+        ];
+
+      function App() {
+        const [data, setData] = useState(arr);
+
+        const selectHandler = id => {
+            const newData = [];
+            for(let user of data) 
+                (user.id == id) ? newData.push({...user, selected: !user.selected}) : newData.push(user);
+            
+            setData(newData);
+        };
+
+        return (
+          <div>
+            <table border="1px">
+              <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {data.map((user, index) => {
+                  return (
+                    <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>{user.name}</td>
+                        <td> <input type="checkbox" onChange={() => selectHandler(user.id)}/> </td>
+                    </tr>
+                  );
+              })}
+              </tbody>
+            </table>
+            <h2>Selected Users</h2>
+            <ul>
+                {data.filter(user => user.selected).map((user, index) => <li key={index}>{user.name}</li> )}
+            </ul>
+          </div>
+        );
+      }
+      ReactDOM.render(<App />, rootHandle);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Embedding expression</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+
+        const data = {
+            first_name: 'joseph',
+            email: 'joseph@gmail.com',
+            avatar: 'https://i.picsum.photos/id/1/367/267.jpg?hmac=jZdc5TviQPVhxLyvyU8siO-I5FMVXVZpBhsBYKbBJpM',
+        };
+
+        const ele = (
+            <table>
+                <thead>
+                    <tr>
+                        <th>pic</th>
+                        <th>name</th>
+                        <th>email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><img src={data.avatar} /></td>
+                        <td>{data.first_name}</td>
+                        <td>{data.email}</td>
+                    </tr>
+                </tbody>
+            </table>
+        )
+        
+        ReactDOM.render(ele, rootHandle);
+    </script>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+
+        const users = [
+            {
+                id:1,
+                first_name: 'Steve',
+                phone: '123456789',
+                email: 'steve@mail.com',
+                avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/josephstein/128.jpg',
+            },
+            {
+                id:2,
+                first_name: 'Steve',
+                phone: '123456789',
+                email: 'steve@mail.com',
+                avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/josephstein/128.jpg',
+            },
+            {
+                id:3,
+                first_name: 'Steve',
+                phone: '123456789',
+                email: 'steve@mail.com',
+                avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/josephstein/128.jpg',
+            },
+            {
+                id:4,
+                first_name: 'Steve',
+                phone: '123456789',
+                email: 'steve@mail.com',
+                avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/josephstein/128.jpg',
+            },
+        ];
+
+        function Userinfo(props) {
+            return (
+                <article>
+                    <h2>{props.details.first_name}</h2>
+                    <h2>{props.details.phone}</h2>
+                    <h2>{props.details.email}</h2>
+                    <hr />
+                </article>
+            );
+        };
+
+        function GenerateList() {
+            return (
+                    <div>
+                        {users.map((obj, index) => {
+                            return <Userinfo key={index} details={obj}/>;
+                        })}
+                    </div>
+            );
+        }
+
+        ReactDOM.render(<GenerateList />, rootHandle);
+    </script>
+</body>
+</html> 

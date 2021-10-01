@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+
+        const user = {
+            first_name: 'Steve',
+            phone: '123456789',
+            email: 'steve@mail.com',
+            avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/josephstein/128.jpg',
+        };
+
+        function Contact(props) {
+            return (
+                <div>
+                   <img src={props.obj.avatar} alt={props.obj.first_name} />
+                   <h3>{props.obj.first_name}</h3>
+                </div>
+            );
+        };
+
+
+        ReactDOM.render(<Contact obj={user}/>, rootHandle);
+    </script>
+</body>
+</html> 

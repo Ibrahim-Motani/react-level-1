@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample Title</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/babel-standalone@6.26.0/babel.js"
+    ></script>
+
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+      const tasks = [
+        { id: 1, title: "Task 1", isCompleted: true },
+        { id: 2, title: "Task 2", isCompleted: true },
+        { id: 3, title: "Task 3", isCompleted: false },
+        { id: 4, title: "Task 4", isCompleted: false },
+        { id: 5, title: "Task 5", isCompleted: true },
+      ];
+
+      function TasksList(props) {
+        const findElement = () => {
+          const id = prompt("Enter ID");
+          const task = props.data.find(element => element.id == id);
+          (task) ? alert(`${task.title} - ${task.isCompleted}`) : alert(`Task with id ${id} not found`);
+        };
+
+        const show = () => {
+            let ans = '';
+            for(let task of props.data) 
+                if(task.isCompleted)
+                    ans += task.title + ', ';
+            alert(ans.slice(0, ans.length-2));
+        };
+
+        return (
+            <div>
+                <button onClick={findElement}>Find Task by ID</button>
+                <button onClick={show}>Show Completed Tasks</button>
+            </div>
+        );
+      };
+
+      ReactDOM.render(<TasksList data={tasks} />, rootHandle);
+    </script>
+  </body>
+</html>

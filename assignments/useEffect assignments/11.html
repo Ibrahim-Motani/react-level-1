@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample Title</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/babel-standalone@6.26.0/babel.js"
+    ></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+      const { useState, useEffect } = React;
+
+      if (localStorage.getItem("title") === null)
+        localStorage.setItem("title", "");
+
+      if (localStorage.getItem("body") === null)
+        localStorage.setItem("body", "");
+
+      function SampleComponent() {
+        const [title, setTitle] = useState(localStorage.getItem("title"));
+        const [body, setBody] = useState(localStorage.getItem("body"));
+        const [reload, setReload] = useState(false);
+
+        useEffect(() => {
+          localStorage.setItem("title", title);
+          localStorage.setItem("body", body);
+
+          if (reload) {
+            window.location.reload();
+          }
+          setReload(false);
+        }, [title, body, reload]);
+
+        const handleSave = () => {
+          setTitle("");
+          setBody("");
+        };
+
+        return (
+          <div>
+            <h1>Story Book</h1>
+            <label>Title</label> <br />
+            <input
+              type="text"
+              value={title}
+              onChange={event => setTitle(event.target.value)}
+            />{" "}
+            <br />
+            <label>Body</label> <br />
+            <textarea
+              value={body}
+              onChange={event => setBody(event.target.value)}
+            ></textarea>{" "}
+            <br />
+            <button type="button" onClick={handleSave}>
+              Save
+            </button>
+            <button type="button" onClick={() => setReload(true)}>
+              Reload
+            </button>
+          </div>
+        );
+      }
+      ReactDOM.render(<SampleComponent />, rootHandle);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+        const {useState} = React;
+        
+        function Count() {
+            const [click, setClick] = useState(0);
+            const [count, setCount] = useState(0);
+
+            const increase = () => {
+                setCount(count + 1);
+                setClick(click + 1);
+            };
+
+            const decrease = () => {
+                setCount(count - 1);
+                setClick(click + 1);
+            };
+
+            return(
+                <div>
+                    <h1>Track Count & Clicks</h1>
+                    <h2>Count - {count}, Clicks - {click}</h2>
+                    <button onClick={increase}>Up</button>
+                    <button onClick={decrease}>Down</button>
+                </div>
+            );
+        };
+        
+        ReactDOM.render(<Count />, rootHandle);
+    </script>
+</body>
+</html>

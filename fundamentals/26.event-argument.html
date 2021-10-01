@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+
+        const users = [
+            {id: 1, name: 'user1', email: 'user1.@gmail.com'},
+            {id: 2, name: 'user2', email: 'user2.@gmail.com'},
+            {id: 3, name: 'user3', email: 'user3.@gmail.com'},
+        ];
+
+        function List(props) {
+            const displayInfo = (id) => {
+                const info = props.users.filter(user => user.id == id)
+                console.log(info);
+                alert(`${info[0]['name']} - ${info[0]['email']}`);
+            }
+            return (
+                <div>
+                    {props.users.map(user => <li key={user.id}><button onClick={ ()=> displayInfo(user.id)}>{user.name}</button></li> )}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<List users={users}/>, rootHandle);
+    </script>
+</body>
+</html>

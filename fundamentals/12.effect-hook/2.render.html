@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample Title</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/babel-standalone@6.26.0/babel.js"
+    ></script>
+
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+      const { useState, useEffect } = React;
+
+      function BookTickets() {
+          const [count, setCount] = useState(1);
+
+          useEffect(() => {
+              document.title = `You have booked ${count}`;
+          });
+
+        return (
+            <div>
+                <h2>You have booked {count} tickets</h2>
+                <button onClick={() => setCount(count + 1)}> + 1</button>
+            </div>
+        );
+      }
+      ReactDOM.render(<BookTickets />, rootHandle);
+    </script>
+  </body>
+</html>

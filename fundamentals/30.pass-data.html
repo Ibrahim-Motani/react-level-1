@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+
+        function Parent(props) {
+            const name1 = 'Ross';
+            const name2 = 'Joey'
+            const getHugs = name => {
+                alert(`${name} has hugged parent`)
+            }
+
+            return (
+                <div>
+                    <h1>Parent</h1>
+                    <Child name={name1} func={getHugs}/>
+                    <Child name={name2} func={getHugs}/>
+                </div>
+            );
+        };
+
+        function Child(props) {
+            const {name, func} = props;
+            return(
+                <div>
+                    <h2>Child component - {name}</h2>
+                    <button onClick={() => func(name)}>HUG</button>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<Parent />, rootHandle);
+    </script>
+</body>
+</html>

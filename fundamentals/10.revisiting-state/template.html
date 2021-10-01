@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+        const {useState} = React;
+
+        function PriceDetails({totalItems, cartTotal}) {
+            return (
+                <div>
+                    <h3> Price Details </h3>
+                    <b> Price ({totalItems} items) - {cartTotal} </b> 
+                    <br />
+                    <b> Delivery Charge - 50 </b>
+                    <br />
+                    <b> Total = {cartTotal + 50} </b>
+                    <br />
+                </div>
+            );
+        }
+
+        function CartItem({name, price, quantity, id}) {
+            return(
+                <div>
+                    <b>{name}</b>
+                    <p>INR {price}</p>
+                    <button> - </button> {quantity} <button> + </button>
+                    <button>Remove</button>
+                    <hr />
+                </div>
+            );
+        }
+
+        function MyCart(props) {
+            const [products, setProducts] = useState([
+                {id: 1, name: 'Marker', price: 10, quantity: 1},
+                {id: 2, name: 'Scale', price: 5, quantity: 1},
+            ]);
+
+            const calcSum = () => products.reduce((acc, prod) => acc += prod.price * prod.quantity, 0);
+            
+            return (
+                <div>
+                    <h2>My Cart ({products.length}) </h2>
+                    <hr />
+                    {products.map(prod => <CartItem key={prod.id} {...prod}/>)}
+                    <PriceDetails totalItems={products.length} cartTotal={calcSum()}/>
+                </div>
+            );
+        }
+
+        function App() {
+            return (
+                <div>
+                    <h1>Cart Page</h1>
+                    <MyCart />
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, rootHandle);
+    </script>
+</body>
+</html>

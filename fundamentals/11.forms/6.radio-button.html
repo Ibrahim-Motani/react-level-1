@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Document</title>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.js"></script>
+
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+      const { useState } = React;
+
+      function UserAddress() {
+        const [address, setAddress] = useState("");
+        const [addType, setAddType] = useState("");
+
+        return (
+          <form>
+            <label>Address</label> <br />
+            <textarea
+              value={address}
+              onChange={event => setAddress(event.target.value)}
+            ></textarea>
+            <br />
+            <label>Address Type</label> <br />
+            <input 
+            type="radio" 
+            name="addType" 
+            value="home" 
+            checked={addType == "home"} 
+            onChange={event => setAddType(event.target.value)}
+            /> Home
+            <input 
+            type="radio" 
+            name="addType" 
+            value="office" 
+            checked={addType == "office"} onChange={event => setAddType(event.target.value)} 
+            /> Address
+          </form>
+        );
+      }
+
+      ReactDOM.render(<UserAddress />, rootHandle);
+    </script>
+  </body>
+</html>

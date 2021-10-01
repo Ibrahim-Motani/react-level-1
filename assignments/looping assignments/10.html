@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample Title</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/babel-standalone@6.26.0/babel.js"
+    ></script>
+
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+
+      // Your code goes here
+      const colors = {
+        red: ["energy", "strength", "power", "courage"],
+        blue: ["loyalty", "trust", "stability", "confidence"],
+        orange: ["excitment", "fun", "haste", "action"],
+        yellow: ["cheerfulness", "happiness", "joy", "optimism"],
+      };
+
+      const generateList = (obj) => {
+        const result = [];
+        for(let key in obj) {
+            result.push(
+                <div key={key}>
+                    <h2>{key.toUpperCase()}</h2>
+                    <ol>
+                        {obj[key].map((symbol, index) => <li key={index}>{symbol}</li>)}
+                    </ol>
+                </div>
+            )
+        }
+        return result;
+      };
+
+      const ele = (
+        <div>
+            <h2>Colors & it's Symbols - Object</h2>
+            {generateList(colors)}
+        </div>
+      );
+      ReactDOM.render(ele, rootHandle);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+
+        const tasks = [
+            {id: 1, title: 'Task 1', isCompleted: true},
+            {id: 2, title: 'Task 2', isCompleted: true},
+            {id: 3, title: 'Task 3', isCompleted: false},
+        ];
+
+        function TasksList(props) {
+            const {tasks, title} = props;
+            return (
+                <div>
+                    <h2>{title} - {tasks.length}</h2>
+                    <ul>
+                    {tasks.map((task, index) => <li key={index}>{task.title}</li>)}
+                    </ul>
+                </div>
+            );
+        };
+
+        const ele = (
+            <div>
+                <TasksList title='All' tasks={tasks}/>
+                <TasksList title="Completed" tasks={tasks.filter(task => task.isCompleted)}/>
+                <TasksList title="Incomplete"
+                tasks={tasks.filter(task => !task.isCompleted)}/>
+            </div>
+        );
+
+        ReactDOM.render(ele, rootHandle);
+    </script>
+</body>
+</html>

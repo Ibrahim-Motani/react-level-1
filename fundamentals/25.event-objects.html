@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+        
+        function NextPage(props) {
+            function handleClick(event) {
+                console.log('we prevented going to new page');
+                event.preventDefault();
+            }
+
+            return (
+                <a onClick={handleClick} href={props.url}>{props.name}</a>
+            )
+        }
+
+        const ele = <NextPage name="google" url="http://www.google.com" />
+        ReactDOM.render(ele, rootHandle);
+    </script>
+</body>
+</html>

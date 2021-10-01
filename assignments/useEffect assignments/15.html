@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample Title</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/babel-standalone@6.26.0/babel.js"
+    ></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+      const { useState, useEffect } = React;
+
+      function SampleComponent() {
+          const [lat, setLat] = useState('');
+          const [long, setLong] = useState('');
+          const [city, setCity] = useState('');
+          const [status, setStatus] = useState(false);
+
+          useEffect(() => {
+            navigator.geolocation.getCurrentPosition(position => {
+                const latt = position.coords.latitude;
+                const longg = position.coords.longitude;
+                setLat(latt); setLong(longg)
+                axios.get(`http://api.positionstack.com/v1/reverse?access_key=40dba2ad3799f5548575cfc18a2c0486&query=${latt},${longg}`).then(response => {
+                    const result = response.data['data'];
+                    setCity(result[1].county);
+                    setStatus(true);
+                });
+            })
+          }, []);
+
+        return (
+          <div>
+            <h1>Geo Location</h1> <hr/>
+            {status && <h2>Latitude - {lat}</h2>}
+            {status && <h2>Laongitude - {long}</h2>}
+            {status && <h2>City - {city}</h2>}
+            <button type="button">Get Location</button>
+          </div>
+        );
+      }
+      ReactDOM.render(<SampleComponent />, rootHandle);
+    </script>
+  </body>
+</html>

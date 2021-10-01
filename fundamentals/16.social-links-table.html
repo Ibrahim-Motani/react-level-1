@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Display list</title>
+</head>
+
+<body>
+    <div id="root">
+    </div>
+
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+
+        const users = [
+            {id: 1, name: 'facebook', url: 'www.facebook.com'},
+            {id: 2, name: 'gmail', url: 'www.gmail.com'},
+            {id: 3, name: 'twitter', url: 'www.twitter.com'},
+        ];
+
+
+        const ele = (
+            <div>
+                <h2>Listing users - {users.length}</h2>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Url</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {users.map((ele) => {
+                            return (
+                                <tr key={ele.id}>
+                                    <td>{ele.id}</td>
+                                    <td>{ele.name}</td>
+                                    <td>{ele.url}</td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        );
+
+        ReactDOM.render(ele, rootHandle);
+    </script>
+</body>
+</html>

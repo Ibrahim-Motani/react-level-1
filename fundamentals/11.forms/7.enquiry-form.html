@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/validator/13.6.0/validator.min.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+        const {useState} = React;
+
+        function EnquiryForm() {
+            const [name, setName] = useState('');
+            const [email, setEmail] = useState('');
+            const [message, setMessage] = useState('');
+            const [profession, setProfession] = useState('Working');
+            const [gender, setGender] = useState('');
+            const [conditions, setConditions] = useState(false);
+            const [showMessage, setMessageInfo] = useState(false);
+            const [formErrors, setFormErros] = useState({ });
+            const errors = {};
+
+            const runValidations = () => {
+                // name
+                if(name.trim().length === 0)
+                    errors.name = 'name can\'t be blank';
+                //email
+                if(email.trim().length === 0)
+                    errors.email = 'email can\'t be blank ';
+                else if(!validator.isEmail(email))
+                    errors.email = 'Invalid Email Format';
+            };
+
+            const handleSubmit = event => {
+                event.preventDefault();
+                runValidations();
+
+                if(Object.keys(errors).length == 0) {
+                    const result = {name, email, gender, profession};
+                    console.log(result);
+                    setName('');
+                    setEmail('');
+                    setProfession('Working');
+                    setGender('');
+                    setMessage('');
+                    setConditions(false);
+                    setFormErros('');
+                } 
+                else 
+                    setFormErros(errors);
+                
+            };
+
+            return (
+                <form onSubmit={handleSubmit}>
+                    <label>Name</label> <br />
+                    <input 
+                    type="text" 
+                    value={name} 
+                    onChange={event => setName(event.target.value)}
+                    />
+                    { formErrors.name && <span>{formErrors.name}</span> } 
+                    <br />
+
+                    <label >Email</label> <br />
+                    <input 
+                    type="text" 
+                    value={email} 
+                    onChange={event => setEmail(event.target.value)} 
+                    /> 
+                    { formErrors.email && <span>{formErrors.email}</span> } 
+                    <br />
+
+                    <label>Message</label> <br />
+                    <textarea 
+                    value={message} 
+                    onChange={event => setMessage(event.target.value)} onFocus={() => setMessageInfo(true)}
+                    onBlur={() => setMessageInfo(false)}>
+                    </textarea> 
+                    {showMessage && <span>Enter your details so we can understand you better</span>}
+                    <br />
+
+                    <label>Profession</label> <br />
+                    <select 
+                    value={profession} 
+                    onChange={event => setProfession(event.target.value)}> 
+                        <option value="Working">Working</option>
+                        <option value="Not-Working">Not Working</option>
+                    </select> <br />
+
+                    <label>Gender</label> <br />
+                    <input 
+                    type="radio" 
+                    name="gender" 
+                    value="male" 
+                    checked={gender == 'male'}
+                    onChange={event => setGender(event.target.value)} /> Male
+                    <input 
+                    type="radio" 
+                    name="gender" 
+                    value="female" 
+                    checked={gender == 'female'}
+                    onChange={event => setGender(event.target.value)} /> Female <br />
+                    
+                    <input 
+                    type="checkbox" 
+                    checked={conditions}
+                    onChange={event => setConditions(event.target.checked)}
+                    /> I agree to terms and Conditions <br />
+
+                    <input type="submit" disabled={!conditions}/>
+                </form>
+            );
+        }
+        
+        ReactDOM.render(<EnquiryForm />, rootHandle);
+    </script>
+</body>
+</html>

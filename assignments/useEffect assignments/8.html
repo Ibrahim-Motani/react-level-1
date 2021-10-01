@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample Title</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/babel-standalone@6.26.0/babel.js"
+    ></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+      const { useState, useEffect } = React;
+      const usersURL = `https://jsonplaceholder.typicode.com/users`;
+      const todoURL = `https://jsonplaceholder.typicode.com/todos?userId=`;
+
+      function SampleComponent() {
+        const [data, setData] = useState([]);
+        const [selection, setSelection] = useState("");
+        const [todoData, setTodoData] = useState([]);
+        const [isChecked, setIsChecked] = useState(false);
+
+        useEffect(() => {
+          axios.get(usersURL).then(response => {
+            const result = response.data;
+            setData(result);
+          });
+        }, []);
+
+        useEffect(() => {
+          axios.get(todoURL + selection).then(response => {
+            const result = response.data;
+            setTodoData(result);
+            setIsChecked(false);
+          });
+        }, [selection]);
+
+        return (
+          <div>
+            <label>Users</label>
+            <select
+              value={selection}
+              onChange={event => setSelection(event.target.value)}
+            >
+              <option value="">Select User</option>
+              {data.map(user => (
+                <option key={user.id} value={user.id}>
+                  {user.name}
+                </option>
+              ))}
+            </select>
+            {selection && <h2>Listing Tasks</h2>}
+            {selection && (
+              <div>
+                <label>Completed</label>
+                <input
+                  type="checkbox"
+                  checked={isChecked}
+                  onChange={() => setIsChecked(!isChecked)}
+                />
+              </div>
+            )}
+            <ul>
+              {!isChecked
+                ? todoData.map(todo => (
+                    <li
+                      style={
+                        todo.completed
+                          ? { textDecoration: "line-through" }
+                          : { textDecoration: "none" }
+                      }
+                      key={todo.id}
+                    >
+                      {todo.title}
+                    </li>
+                  ))
+                : todoData
+                    .filter(todo => todo.completed)
+                    .map(todo => (
+                      <li
+                        style={
+                          todo.completed
+                            ? { textDecoration: "line-through" }
+                            : { textDecoration: "none" }
+                        }
+                        key={todo.id}
+                      >
+                        {todo.title}
+                      </li>
+                    ))}
+            </ul>
+          </div>
+        );
+      }
+      ReactDOM.render(<SampleComponent />, rootHandle);
+    </script>
+  </body>
+</html>

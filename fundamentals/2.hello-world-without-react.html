@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Hello world with Vanilla JS</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script>
+        const rootHandle = document.getElementById('root');
+        const msg = `Hello World`;
+
+        const h1Tag = document.createElement('h1');
+        h1Tag.textContent = msg;
+        rootHandle.appendChild(h1Tag); 
+    </script>
+</body>
+</html>

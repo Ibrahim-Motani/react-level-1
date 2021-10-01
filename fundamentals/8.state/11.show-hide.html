@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+        const {useState} = React;
+
+        function App() {
+            const [controller, setController] = useState(true);
+
+            return (
+                <div>
+                    <h1>Show / Hide</h1>
+                    {controller && <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga eaque numquam, nulla minus magni inventore quia saepe mollitia nisi aspernatur!</p> }
+                    <button onClick={() => setController(!controller)}>{controller ? 'Hide' : 'Show' }</button>
+                </div>
+            );
+        };
+        
+        ReactDOM.render(<App />, rootHandle);
+    </script>
+</body>
+</html>

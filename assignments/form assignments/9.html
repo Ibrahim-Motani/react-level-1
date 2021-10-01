@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sample Title</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/babel-standalone@6.26.0/babel.js"
+    ></script>
+
+    <script type="text/babel">
+      const rootHandle = document.getElementById("root");
+      const { useState } = React;
+      const arr = [
+        { id: 1, title: "get the website live", completed: false },
+        { id: 2, title: "work on user validation", completed: false },
+        { id: 3, title: "automate deployment process", completed: false },
+      ];
+
+      function App({data}) {
+        const [tasks, setTasks] = useState(data);
+        const [disableAll, setDisableAll] = useState(false);
+
+        const changeHandler = id => {
+          const newTasks = [];
+          tasks.forEach(task => {
+            (task.id == id) ? newTasks.push({...task, completed: !task.completed}) : newTasks.push(task);
+          })
+          setTasks(newTasks);
+          console.log(tasks);
+        }
+
+        const allCompletedHandler = () => {
+          const newTasks = [];
+          if(disableAll) {
+            tasks.forEach(task => {
+              newTasks.push({...task, completed: false});
+            });
+            setDisableAll(false);
+          }
+          
+          else {
+            tasks.forEach(task => {
+              newTasks.push({...task, completed: true});
+            });
+            setDisableAll(true);
+          }
+          setTasks(newTasks);
+          console.log(tasks);
+        }
+
+        return (
+          <table border="1px">
+            <thead>
+              <tr>
+                <th><input type="checkbox" onChange={allCompletedHandler} /></th>
+                <th>Title</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tasks.map(task => {
+                return (
+                  <tr key={task.id}>
+                    <td><input type="checkbox" checked={task.completed || disableAll} disabled={disableAll} onChange={() => changeHandler(task.id)}/></td>
+                    <td>{task.title}</td>
+                    <td>{task.completed ? "completed" : "pending"}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        );
+      }
+
+      ReactDOM.render(<App  data={arr}/>, rootHandle);
+    </script>
+  </body>
+</html>

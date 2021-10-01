@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Display list</title>
+</head>
+
+<body>
+    <div id="root">
+    </div>
+
+    <script src="./js/react.development.js"></script>
+    <script src="./js/react-dom.development.js"></script>
+    <script src="./js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+        const fruits = ['apple', 'kiwi', 'mango'];
+
+        // const generateList = (fruits) => {
+            // const result = [];
+            // for(let i=0; i<fruits.length; i++) {
+            //     result.push(<li>{fruits[i]}</li>);
+            // }
+            // console.log(result);
+
+            // fruits.forEach(element => {
+            //     result.push(<li>{element}</li>)
+            // });
+            // return result;
+
+            // const result = fruits.map((element) => <li>{element}</li>);
+            // return result;
+        // }
+
+        const ele = (
+            <ul>
+                {fruits.map((ele) => {
+                    return <li key={ele}>{ele}</li>
+                })}
+            </ul>
+        );
+
+        ReactDOM.render(ele, rootHandle);
+    </script>
+</body>
+</html>

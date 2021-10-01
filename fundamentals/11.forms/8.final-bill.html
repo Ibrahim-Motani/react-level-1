@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root">
+
+    </div>
+
+    <script src="../js/react.development.js"></script>
+    <script src="../js/react-dom.development.js"></script>
+    <script src="../js/babel.js"></script>
+
+    <script type="text/babel">
+        const rootHandle = document.getElementById('root');
+        const {useState} = React;
+        function FinalBill() {
+            const [bill, setBill] = useState(0);
+
+            return (
+                <form >
+                    <label>Amount</label> <br/>
+                    <input type="number" value={bill} onChange={event => setBill(event.target.value)}/> <br/>
+                    <label >Final Amount</label> <br/>
+                    <input type="number" value={Math.floor(bill* 18 / 100)} disabled={true} />
+                </form>
+            );
+        }
+        ReactDOM.render(<FinalBill />, rootHandle);
+    </script>
+</body>
+</html>
